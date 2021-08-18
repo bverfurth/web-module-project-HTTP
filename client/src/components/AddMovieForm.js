@@ -30,7 +30,7 @@ const AddMovieForm = (props) => {
       .then((res) => {
         console.log("Added Movie!", res.data);
         props.setMovies(res.data);
-        res.push(`/movies`);
+        props.history.push("/movie-list");
       })
       .catch((error) => {
         console.log("Error, Movie Not Added", error);
@@ -45,7 +45,7 @@ const AddMovieForm = (props) => {
         <form onSubmit={handleSubmit}>
           <div className="modal-header">
             <h4 className="modal-title">
-              Adding <strong>{movie.title}</strong>
+              Editing <strong>{movie.title}</strong>
             </h4>
           </div>
           <div className="modal-body">

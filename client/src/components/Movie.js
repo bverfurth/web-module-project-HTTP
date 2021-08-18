@@ -21,7 +21,7 @@ const Movie = (props) => {
       });
   }, [id]);
 
-  const handleDeleteClick = () => {
+  const handleDeleteButton = () => {
     console.log("Movie Deleted!");
     axios.delete(`http://localhost:5000/api/movies/${id}`).then((res) => {
       deleteMovie(res.data);
@@ -75,7 +75,7 @@ const Movie = (props) => {
                 >
                   Edit
                 </Link>
-                <span className="delete" onClick={handleDeleteClick}>
+                <span className="delete" onClick={handleDeleteButton}>
                   <input
                     type="button"
                     className="m-2 btn btn-danger"
