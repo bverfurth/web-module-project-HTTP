@@ -30,7 +30,7 @@ const AddMovieForm = (props) => {
       .then((res) => {
         console.log("Added Movie!", res.data);
         props.setMovies(res.data);
-        props.history.push("/movie-list");
+        push(`/movies`);
       })
       .catch((error) => {
         console.log("Error, Movie Not Added", error);

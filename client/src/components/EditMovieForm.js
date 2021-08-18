@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
 const EditMovieForm = (props) => {
+  const { push } = useHistory();
   const { id } = useParams();
 
   const [movie, setMovie] = useState({
@@ -40,7 +41,7 @@ const EditMovieForm = (props) => {
       .then((res) => {
         console.log("Submitted!", res.data);
         props.setMovies(res.data);
-        res.push(`/movies/${id}`);
+        push(`/movies/${id}`);
       })
       .catch((error) => {
         console.log("Submitting Error!", error);
