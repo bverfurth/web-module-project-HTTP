@@ -6,7 +6,7 @@ import { useParams, useHistory } from "react-router-dom";
 const EditMovieForm = (props) => {
   const { id } = useParams();
 
-  const [movieFormValues, setMovieFormValues] = useState({
+  const [movie, setMovie] = useState({
     title: "",
     director: "",
     genre: "",
@@ -14,9 +14,21 @@ const EditMovieForm = (props) => {
     description: "",
   });
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/movies/${id}`)
+      .then((res) => {
+        console.log("Edit Successful!", res);
+        setMovie(res.data);
+      })
+      .catch((error) => {
+        console.log("Error Editing", error);
+      });
+  });
+
   const handleChange = (e) => {
-    setMovieFormValues({
-      ...movieFormValues,
+    setMovie({
+      ...movie,
       [e.target.name]: e.target.value,
     });
   };
@@ -24,16 +36,18 @@ const EditMovieForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put("localhost:5000/api/movies", movieFormValues)
+      .put(`http://localhost:5000/api/movies/${id}`, movie)
       .then((res) => {
-        console.log("Add Successful!", res);
-        props.setItems(res.data);
-        push("/movie-list");
+        console.log("Submitted!", res.data);
+        props.setMovies(res.data);
+        res.push(`/movies/${id}`);
       })
-      .catch((error) => console.log("Error Found", error));
+      .catch((error) => {
+        console.log("Submitting Error!", error);
+      });
   };
 
-  const { title, director, genre, metascore, description } = movieFormValues;
+  const { title, director, genre, metascore, description } = movie;
 
   return (
     <div className="col">
@@ -41,7 +55,7 @@ const EditMovieForm = (props) => {
         <form onSubmit={handleSubmit}>
           <div className="modal-header">
             <h4 className="modal-title">
-              Editing <strong>{movieFormValues.title}</strong>
+              Editing <strong>{movie.title}</strong>
             </h4>
           </div>
           <div className="modal-body">
